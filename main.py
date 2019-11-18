@@ -28,6 +28,7 @@ while running:
         if keys[pg.K_SPACE] and jump_finished==0:
             jmp_pressed=1   
             jmp=15 
+            g=-7
             jump_finished=1
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -45,7 +46,6 @@ while running:
     else:
         if jump_fall<5:
             jump_fall+=1
-            g=-7
             y-=g
             g-=2
         else:
