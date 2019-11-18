@@ -17,9 +17,10 @@ x=400
 y=170
 vel= 8 
 jmp= 15
-g= -10  
+g= -15  
 jmp_pressed=5
 jump_finished=0
+jump_fall=5
 while running: 
     pg.time.delay(50)
     keys = pg.key.get_pressed()
@@ -40,8 +41,15 @@ while running:
         jmp_pressed+=1
         y-=jmp
         jmp-=3
+        jump_fall=1
     else:
-        y-=g
+        if jump_fall<5:
+            jump_fall+=1
+            g=-7
+            y-=g
+            g-=2
+        else:
+            y-=g
         if jmp_pressed==5:
             jump_finished=0
     if y>440:
