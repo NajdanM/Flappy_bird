@@ -26,6 +26,8 @@ g= -20
 jmp_pressed=5
 jump_finished=0
 jump_fall=5
+score=0
+font=pg.font.Font(None, 74)
 
 
 while running: 
@@ -58,12 +60,15 @@ while running:
     x_pipe3-=vel
     if x_pipe1==-120:
         x_pipe1=1080
+        score+=1
         e1=rng.randint(-150,150)
     if x_pipe2==-120:
         x_pipe2=1080
+        score+=1
         e2=rng.randint(-150,150)
     if x_pipe3==-120:
         x_pipe3=1080
+        score+=1
         e3=rng.randint(-150,150)
     if jmp_pressed<5:
         jmp_pressed+=1
@@ -92,6 +97,8 @@ while running:
         if y_bird>270+e3 or y_bird<190+e3:
             running=False
     if y_bird>440:
-        running = False         
+        running = False     
+    text = font.render(str(score), 1, (255,255,255))    
+    screen.blit(text, (270,50))
     pg.display.update()  
     screen.fill(background) 
