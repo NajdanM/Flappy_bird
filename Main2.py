@@ -15,6 +15,7 @@ class Bird():
         self.vel = 20
         self.jump_finish = 1
         self.image = pg.image.load("bird.png")
+        self.score = 0
 
     def jump(self):
         if self.jump_finish == 1:
@@ -32,7 +33,7 @@ class Bird():
         screen.blit(self.image, (self.x, self.y))
 
     def pipe_collision (self, pipe_y):
-        if self.y + 40 >= pipe_y or self.y <= pipe_y - 120:
+        if self.y + 34 >= pipe_y or self.y <= pipe_y - 130:
             return True
         return False
     
@@ -40,6 +41,9 @@ class Bird():
         if self.y >= 430:
             return True
         return False
+
+    def score_up (self):
+        self.score += 1    
 
 
 """ Upper pipe class """
@@ -139,6 +143,7 @@ pg.display.set_caption('Flappy bird')
 pg.display.flip()
 running = True
 clock = pg.time.Clock()
+font = pg.font.Font(None, 40)
 ground = pg.image.load("ground.png")
 
 
@@ -182,13 +187,16 @@ while running:
     for x in birds:
         x.draw(screen)
     screen.blit(ground, (0, 470))
-    pg.display.update()
+    bird.score_up()
+    text = font.render('Score '+str(bird.score), 1, (255,255,255))   
+    screen.blit(text, (0,0)) 
+    pg.display.update() 
     screen.fill(background)
 
     """ Pipe collision """
     """ lower_pipe_y = pipes[0].y"""
     
-    if pipes[0].x <= 80 and pipes[0].x > -60:
+    if pipes[0].x <= 73 and pipes[0].x > -57:
         for x in birds:
             if x.pipe_collision(pipes[0].y):  
                 running = False
