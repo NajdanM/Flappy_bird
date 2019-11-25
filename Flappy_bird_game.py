@@ -42,9 +42,6 @@ class Bird():
             return True
         return False
 
-    def score_up (self):
-        self.score += 1    
-
 
 """ Upper pipe class """
 
@@ -122,6 +119,7 @@ bird_y = 160
 bird_x = 40
 bird = Bird(bird_x,bird_y)
 birds.append(bird)
+score = 0
 
 
 """ Pipe initialization """
@@ -175,20 +173,20 @@ while running:
         del pipes[0]
         del pipes[0]
         pipe_number -=2
+        score +=1
 
     """ Drawing """
 
-    for x in pipes:
-        x.update()
-    for x in pipes:
-        x.draw(screen)
-    for x in birds:
-        x.update()
-    for x in birds:
-        x.draw(screen)
+    for pipe in pipes:
+        pipe.update()
+    for pipe in pipes:
+        pipe.draw(screen)
+    for bird in birds:
+        bird.update()
+    for bird in birds:
+        bird.draw(screen)
     screen.blit(ground, (0, 470))
-    bird.score_up()
-    text = font.render('Score '+str(bird.score), 1, (255,255,255))   
+    text = font.render('Score '+str(score), 1, (255,255,255))   
     screen.blit(text, (0,0)) 
     pg.display.update() 
     screen.fill(background)
@@ -197,12 +195,12 @@ while running:
     """ lower_pipe_y = pipes[0].y"""
     
     if pipes[0].x <= 73 and pipes[0].x > -57:
-        for x in birds:
-            if x.pipe_collision(pipes[0].y):  
+        for bird in birds:
+            if bird.pipe_collision(pipes[0].y):  
                 running = False
 
     """ Ground collision"""
 
-    for x in birds:
-        if x.ground_collision():
+    for bird in birds:
+        if bird.ground_collision():
             running = False
