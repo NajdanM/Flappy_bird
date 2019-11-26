@@ -25,8 +25,8 @@ class Bird():
     def update(self):    
         self.y += self.vel
         if self.vel < 20 :
-            self.vel += 4
-        if self.vel == 0:
+            self.vel += 5
+        if self.vel == -5:
             self.jump_finish = 1
 
     def draw(self, screen):
