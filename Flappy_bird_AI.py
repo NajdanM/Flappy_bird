@@ -16,8 +16,7 @@ class Bird():
         self.x = bird_x
         self.vel = 20
         self.jump_finish = 1
-        self.image = pg.image.load("bird.png")
-        self.score = 0
+        self.image = pg.image.load("drakula.png")
 
     def jump(self):
         if self.jump_finish == 1:
@@ -27,7 +26,7 @@ class Bird():
     def update(self):    
         self.y += self.vel
         if self.vel < 20 :
-            self.vel += 4
+            self.vel += 5
         if self.vel == 0:
             self.jump_finish = 1
 
@@ -35,7 +34,7 @@ class Bird():
         screen.blit(self.image, (self.x, self.y))
 
     def pipe_collision (self, pipe_y):
-        if self.y + 34 >= pipe_y or self.y <= pipe_y - 130:
+        if self.y + 40 >= pipe_y or self.y <= pipe_y - 120:
             return True
         return False
     
@@ -94,14 +93,19 @@ font = pg.font.Font(None, 40)
 ground = pg.image.load("ground.png")
 
 pipes = []
+gen = 0
+
 
 """ Game """
 
 
 def eval_genomes(genomes, config):
+    global gen
+    gen +=1
     nets = []
     ge = []
     birds = []
+
     e = rng.randint(-150,150)
     pipes = [pipe_down(480,310+e,8,120),pipe_up(480,-410+e,8,120)]
 
@@ -133,7 +137,6 @@ def eval_genomes(genomes, config):
             if output[0] > 0.5:
                 bird.jump()
 
-
         """ Adding pipes """
         
         if(pipes[pipe_number].x <= 400):
@@ -161,15 +164,16 @@ def eval_genomes(genomes, config):
         for bird in birds:
             bird.draw(screen)
         screen.blit(ground, (0, 470))
-        text = font.render('Score '+str(score), 1, (255,255,255))
-        screen.blit(text, (0,0)) 
+        text = font.render(''+str(score), 1, (255,255,255))
+        screen.blit(text, (270,100)) 
+        text2 = font.render('Generacija: '+str(gen), 1, (255,255,255))
+        screen.blit(text2, (0,0))
         pg.display.update() 
         screen.fill(background)
 
         """ Pipe collision """
-        """ lower_pipe_y = pipes[0].y"""
         
-        if pipes[0].x <= 73 and pipes[0].x > -57:
+        if pipes[0].x <= 80 and pipes[0].x > -60:
             for x, bird in enumerate(birds):
                 if bird.pipe_collision(pipes[0].y):  
                     ge[x].fitness -= 1
@@ -185,6 +189,8 @@ def eval_genomes(genomes, config):
                 ge.pop(x)
                 birds.pop(x)
 
+
+""" Adding text document with information for genetic algorithm """
 
 
 def run(config_file):
