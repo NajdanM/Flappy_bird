@@ -14,7 +14,7 @@ class Bird():
         self.x = bird_x
         self.vel = 20
         self.jump_finish = 1
-        self.image = pg.image.load("bird.png")
+        self.image = pg.image.load("drakula.png")
         self.score = 0
 
     def jump(self):
@@ -33,7 +33,7 @@ class Bird():
         screen.blit(self.image, (self.x, self.y))
 
     def pipe_collision (self, pipe_y):
-        if self.y + 34 >= pipe_y or self.y <= pipe_y - 130:
+        if self.y + 40 >= pipe_y or self.y <= pipe_y - 120:
             return True
         return False
     
@@ -194,7 +194,7 @@ while running:
     """ Pipe collision """
     """ lower_pipe_y = pipes[0].y"""
     
-    if pipes[0].x <= 73 and pipes[0].x > -57:
+    if pipes[0].x <= 80 and pipes[0].x > -60:
         for bird in birds:
             if bird.pipe_collision(pipes[0].y):  
                 running = False

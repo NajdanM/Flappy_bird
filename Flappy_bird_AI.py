@@ -41,7 +41,7 @@ class Bird():
     def ground_collision (self):
         if self.y >= 430:
             return True
-        return False
+        return False  
 
 
 """ Upper pipe class """
@@ -118,16 +118,23 @@ def eval_genomes(genomes, config):
 
     pipe_number = 0
     score = 0
+    speed = 45
 
     running = True
     while running and len(birds) > 0: 
-        pg.time.delay(45)
+        pg.time.delay(speed)
         for event in pg.event.get():
             if event.type==pg.QUIT:
                 running=False
                 pg.quit()
                 quit()
-                break
+                break    
+
+        keys = pg.key.get_pressed()
+        if keys[pg.K_UP] and speed != 0:
+            speed -= 1
+        if keys[pg.K_DOWN]:
+            speed +=1    
         
         for x, bird in enumerate(birds):
             bird.update()
