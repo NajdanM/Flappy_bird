@@ -87,6 +87,7 @@ background=(137,207,240)
 (width, height) = (600,500)
 screen = pg.display.set_mode((width, height))
 screen.fill(background)
+groundback = pg.image.load("background.png")
 pg.display.set_caption('Flappy bird')
 pg.display.flip()
 font = pg.font.Font(None, 40)
@@ -176,7 +177,7 @@ def eval_genomes(genomes, config):
         text2 = font.render('Generacija: '+str(gen), 1, (255,255,255))
         screen.blit(text2, (0,0))
         pg.display.update() 
-        screen.fill(background)
+        screen.blit(groundback, (0, 0))
 
         """ Pipe collision """
         
